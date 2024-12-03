@@ -143,26 +143,26 @@ df = pd.DataFrame()
 
 # Total R ~ 92
 # R = [(5,90),(10,81),(15,72),(24,63),(39,54),(45,45),(47,45),(77,13),(84,14)]
-R = [(5,90),(10,81),(15,72),(24,63),(47,45)]
-T_1 = [1,2,3,4,11]
-T_2 = [10,9,8,7,5]
-PE1 = np.linspace(0.035,0.08,10)
-PE2 = np.linspace(0.04,0.075,10)
-PE3 = np.linspace(0.035,0.065,10)
-PE4 = np.linspace(0.03,0.055,10)
-PE5 = np.linspace(0.01,0.04,10)
-PE_set = [PE1,PE2,PE3,PE4,PE5]
+# R = [(5,90),(10,81),(15,72),(24,63),(47,45)]
+# T_1 = [1,2,3,4,11]
+# T_2 = [10,9,8,7,5]
+# PE1 = np.linspace(0.035,0.08,10)
+# PE2 = np.linspace(0.04,0.075,10)
+# PE3 = np.linspace(0.035,0.065,10)
+# PE4 = np.linspace(0.03,0.055,10)
+# PE5 = np.linspace(0.01,0.04,10)
+# PE_set = [PE1,PE2,PE3,PE4,PE5]
 
 # Total R ~ 112
-# R = [(5,108),(15,99),(33,81),(56,54),(84,27)]
-# T_1 = [1,3,6,9,14]
-# T_2 = [12,11,9,6,3]
-# PE1 = np.linspace(0.04,0.095,10)
-# PE2 = np.linspace(0.05,0.095,10)
-# PE3 = np.linspace(0.04,0.075,10)
-# PE4 = np.linspace(0.025,0.05,10)
-# PE5 = np.linspace(0.005,0.025,10)
-# PE_set = [PE1,PE2,PE3,PE4,PE5]
+R = [(5,108),(15,99),(33,81),(56,54),(84,27)]
+T_1 = [1,3,6,9,14]
+T_2 = [12,11,9,6,3]
+PE1 = np.linspace(0.04,0.095,10)
+PE2 = np.linspace(0.05,0.095,10)
+PE3 = np.linspace(0.04,0.075,10)
+PE4 = np.linspace(0.025,0.05,10)
+PE5 = np.linspace(0.005,0.025,10)
+PE_set = [PE1,PE2,PE3,PE4,PE5]
 
 # Total R ~ 132
 # R = [(5,126),(15,117),(24,108),(45,90),(77,54)]
@@ -219,8 +219,8 @@ plt.yscale('log')
 plt.grid(True, which='both', linestyle=':', linewidth=0.1)
 plt.ylim([10e-6,0])
 # plt.show()
-file_path = f'D:/DeSP-main/Data/Simulation Result of LDPC-RS Code for DNA Storage/Normal_Approximation/FER_Vs_R1/FER_vs_R92_d{d_seq}_theory'
+file_path = f'D:/DeSP-main/Data/Simulation Result of LDPC-RS Code for DNA Storage/Normal_Approximation/FER_Vs_R1/FER_vs_R112_d{d_seq}_theory'
 plt.savefig(file_path)
-esp_file_path = f'D:/DeSP-main/Data/Simulation Result of LDPC-RS Code for DNA Storage/Normal_Approximation/FER_Vs_R1/5_FER_vs_R92_d{d_seq}_theory.eps'
+esp_file_path = f'D:/DeSP-main/Data/Simulation Result of LDPC-RS Code for DNA Storage/Normal_Approximation/FER_Vs_R1/5_FER_vs_R112_d{d_seq}_theory.eps'
 plt.savefig(esp_file_path, bbox_inches='tight', format='eps')
 

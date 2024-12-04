@@ -81,7 +81,6 @@ def func_cal_z(delta, n, k):
 
     return numerator / denominator
 
-
 def pmf_k(k, d_syn, P_e):
     """Calculate the PMF of K."""
     p_k = 1 - 0.43 * P_e
@@ -89,8 +88,8 @@ def pmf_k(k, d_syn, P_e):
 
 def pmf_q(q, k, d_seq, d_syn, P_e):
     """Calculate the PMF of Q."""
-    p_q = d_seq / (d_syn * (1 - 0.43 * P_e))
-    return binom.pmf(q, k, p_q)
+    p_q = d_seq / ((d_syn * (1 - 0.43 * P_e))*pow(pcrp,pcrc))
+    return binom.pmf(q, k*pow(pcrp,pcrc), p_q)
 
 def pmf_m_k(m_k, q, E_1):
     """Calculate the PMF of M_k."""
@@ -129,9 +128,15 @@ def add_column_to_csv(column_name, column_data, filename):
     df.to_csv(filename, index = False)
 
 # Parameter
+global d_seq # Sequencing depth
 d_seq = 15
-d_syn = 30 # Aynthesis number.
-average_copy = d_syn # Average_copy before sequenceing.
+global d_syn # synthesis number.
+d_syn = 30
+global pcrp # Amplify efficient
+pcrp = 0.8
+global pcrc # The number of pcr cycle
+pcrc = 2
+
 m1 = 7 # Length of index/nt
 m2 = 160 # Length of oligo/nt
 k_1 = 2*m1 #length of the first message (index)
@@ -219,8 +224,8 @@ plt.yscale('log')
 plt.grid(True, which='both', linestyle=':', linewidth=0.1)
 plt.ylim([10e-6,0])
 # plt.show()
-file_path = f'D:/DeSP-main/Data/Simulation Result of LDPC-RS Code for DNA Storage/Normal_Approximation/FER_Vs_R1/FER_vs_R112_d{d_seq}_theory'
+file_path = f'./Data/5_FER_vs_R112_d{d_seq}_theory'
 plt.savefig(file_path)
-esp_file_path = f'D:/DeSP-main/Data/Simulation Result of LDPC-RS Code for DNA Storage/Normal_Approximation/FER_Vs_R1/5_FER_vs_R112_d{d_seq}_theory.eps'
+esp_file_path = f'D:./Data/5_FER_vs_R112_d{d_seq}_theory.eps'
 plt.savefig(esp_file_path, bbox_inches='tight', format='eps')
 

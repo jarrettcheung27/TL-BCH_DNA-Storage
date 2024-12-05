@@ -1,0 +1,21 @@
+name: Python Hello World Action
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: windows-11
+
+    steps:
+    - name: Check out repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.11
+
+    - name: Run hello world script
+      run: |
+        echo print("hello world") > hello.py
+        python hello.py

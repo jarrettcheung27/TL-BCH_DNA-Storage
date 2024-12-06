@@ -86,10 +86,30 @@ def pmf_k(k, d_syn, P_e):
     p_k = 1 - 0.43 * P_e
     return binom.pmf(k, d_syn, p_k)
 
-def pmf_q(q, k, d_seq, d_syn, P_e):
-    """Calculate the PMF of Q."""
-    p_q = d_seq / ((d_syn * (1 - 0.43 * P_e))*pow(pcrp,pcrc))
-    return binom.pmf(q, k*pow(pcrp,pcrc), p_q)
+# def pmf_q(q, k, d_seq, d_syn, P_e):
+#     """Calculate the PMF of Q."""
+#     p_q = d_seq / ((d_syn * (1 - 0.43 * P_e))*np.ceil(pow(2*pcrp,pcrc)))
+#     return binom.pmf(q, np.ceil(k*pow(2*pcrp,pcrc)), p_q)
+
+def poisson_approximation_pmf(k, n, x):
+    """
+    Compute the Poisson approximation to the number of reads for each target sequence after sequencing.
+
+    Parameters:
+    - k: The number of oligos sampled from the pool.
+    - n: The number of distinct sequences.
+    - x: The number of copies of sequence i sampled.
+
+    Returns:
+    - The approximate probability of observing exactly x copies of sequence i.
+    """
+    # Poisson PMF formula
+    if n > 0:
+        lambda_ = k / n  # Poisson parameter λ (expected number of successes)
+        pmf = (lambda_ ** x * math.exp(-lambda_)) / math.factorial(x)
+    else:
+        pmf = 0
+    return pmf
 
 def pmf_m_k(m_k, q, E_1):
     """Calculate the PMF of M_k."""
@@ -109,13 +129,12 @@ def cal_ps_tilde(d_syn, d_seq, P_e, E_1, epsilon):
         pmf_k_value = pmf_k(k, d_syn, P_e)
 
         for q in range(0, k + 1):
-            pmf_q_value = pmf_q(q, k, d_seq, d_syn, P_e)
+            pmf_q_value = poisson_approximation_pmf(d_seq, k*pow(2*pcrp,pcrc), q)
 
             for m_k in range(0, q + 1):
                 pmf_m_k_value = pmf_m_k(m_k, q, E_1)
                 prob_value = prob_x_greater_than_half(m_k, epsilon)
                 ps_tilde += pmf_k_value * pmf_q_value * pmf_m_k_value * prob_value
-
     return ps_tilde
 
 # Function to add a column to the DataFrame and save to CSV
@@ -127,7 +146,9 @@ def add_column_to_csv(column_name, column_data, filename):
     # Save the DataFrame to a CSV file
     df.to_csv(filename, index = False)
 
-# Parameter
+# Channel Parameter
+global sequence_num
+sequnece_num = 10000
 global d_seq # Sequencing depth
 d_seq = 15
 global d_syn # synthesis number.
@@ -137,6 +158,7 @@ pcrp = 0.8
 global pcrc # The number of pcr cycle
 pcrc = 2
 
+# Coding parameter
 m1 = 7 # Length of index/nt
 m2 = 160 # Length of oligo/nt
 k_1 = 2*m1 #length of the first message (index)
